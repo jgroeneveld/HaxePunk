@@ -84,9 +84,4 @@ class Graphic
 	// Graphic information.
 	private var _scroll:Bool;
 	private var _point:Point;
-
-#if cpp
-	private var _tileSheet:nme.display.Tilesheet;
-	private var imageID:Int;
-#end
 }

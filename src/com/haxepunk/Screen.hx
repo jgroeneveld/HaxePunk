@@ -23,11 +23,6 @@ class Screen
 
 		// create screen buffers
 		HXP.engine.addChild(_sprite);
-
-		//Added this so that the tilesheet can use a graphics object which is in front of the ones used by software rendering
-#if cpp
-		HXP.engine.addChild(HXP.sprite);
-#end
 	}
 
 	public function init()
