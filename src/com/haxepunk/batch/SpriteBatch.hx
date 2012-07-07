@@ -334,7 +334,7 @@ class SpriteBatch
 
 	private static inline var maxSheetWidth:Int = 1024;
 	private static inline var maxSheetHeight:Int = 1024;
-	private static inline var batchSize:Int = 140;
+	private static inline var batchSize:Int = 256;
 }
 
 #end

@@ -267,50 +267,75 @@ class Tilemap extends Canvas
 	 */
 	public function shiftTiles(columns:Int, rows:Int, wrap:Bool = false)
 	{
-		if (_temp == null)
+		if (usePositions)
 		{
-			_temp = new Array<Array<Int>>();
-			// TODO: fill array
+			columns = Std.int(columns / _tile.width);
+			rows = Std.int(rows / _tile.height);
 		}
-		// if (usePositions)
-		// {
-		// 	columns = Std.int(columns / _tile.width);
-		// 	rows = Std.int(rows / _tile.height);
-		// }
 
-		// if (!wrap) _temp.fillRect(_temp.rect, HXP.blackColor);
+		if (columns != 0)
+		{
+			for (y in 0..._rows)
+			{
+				var row = _map[y];
+				if (columns > 0)
+				{
+					for (x in 0...columns)
+					{
+						var tile:Int = row.pop();
+						if (wrap) row.unshift(tile);
+					}
+				}
+				else
+				{
+					for (x in 0...Std.int(Math.abs(columns)))
+					{
+						var tile:Int = row.shift();
+						if (wrap) row.push(tile);
+					}
+				}
+			}
+			_columns = _map[Std.int(y)].length;
 
-		// if (columns != 0)
-		// {
-		// 	shift(Std.int(columns * _tile.width), 0);
-		// 	if (wrap) _temp.copyPixels(_map, _map.rect, HXP.zero);
-		// 	_map.scroll(columns, 0);
-		// 	_point.y = 0;
-		// 	_point.x = columns > 0 ? columns - _columns : columns + _columns;
-		// 	_map.copyPixels(_temp, _temp.rect, _point);
+#if flash
+			shift(Std.int(columns * _tile.width), 0);
+			_rect.x = columns > 0 ? 0 : _columns + columns;
+			_rect.y = 0;
+			_rect.width = Math.abs(columns);
+			_rect.height = _rows;
+			updateRect(_rect, !wrap);
+#end
+		}
 
-		// 	_rect.x = columns > 0 ? 0 : _columns + columns;
-		// 	_rect.y = 0;
-		// 	_rect.width = Math.abs(columns);
-		// 	_rect.height = _rows;
-		// 	updateRect(_rect, !wrap);
-		// }
+		if (rows != 0)
+		{
+			if (rows > 0)
+			{
+				for (y in 0...rows)
+				{
+					var row:Array<Int> = _map.pop();
+					if (wrap) _map.unshift(row);
+				}
+			}
+			else
+			{
+				for (y in 0...Std.int(Math.abs(rows)))
+				{
+					var row:Array<Int> = _map.shift();
+					if (wrap) _map.push(row);
+				}
+			}
+			_rows = _map.length;
 
-		// if (rows != 0)
-		// {
-		// 	shift(0, Std.int(rows * _tile.height));
-		// 	if (wrap) _temp.copyPixels(_map, _map.rect, HXP.zero);
-		// 	_map.scroll(0, rows);
-		// 	_point.x = 0;
-		// 	_point.y = rows > 0 ? rows - _rows : rows + _rows;
-		// 	_map.copyPixels(_temp, _temp.rect, _point);
-
-		// 	_rect.x = 0;
-		// 	_rect.y = rows > 0 ? 0 : _rows + rows;
-		// 	_rect.width = _columns;
-		// 	_rect.height = Math.abs(rows);
-		// 	updateRect(_rect, !wrap);
-		// }
+#if flash
+			shift(0, Std.int(rows * _tile.height));
+			_rect.x = 0;
+			_rect.y = rows > 0 ? 0 : _rows + rows;
+			_rect.width = _columns;
+			_rect.height = Math.abs(rows);
+			updateRect(_rect, !wrap);
+#end
+		}
 	}
 
 	/** @private Used by shiftTiles to update a rectangle of tiles from the tilemap. */
@@ -421,7 +446,6 @@ class Tilemap extends Canvas
 
 	// Tilemap information.
 	private var _map:Array<Array<Int>>;
-	private var _temp:Array<Array<Int>>;
 	private var _columns:Int;
 	private var _rows:Int;
 
