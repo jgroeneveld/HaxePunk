@@ -350,7 +350,7 @@ class Tilemap extends Canvas
 		var wx:Float = 0, wy:Float = 0, tile:Int = 0,
 			tw:Int = tileWidth, th:Int = tileHeight; // call properties once
 
-		// determine start and end tiles to draw
+		// determine start and end tiles to draw (optimization)
 		var dx = camera.x - point.x,
 			dy = camera.y - point.y,
 			sx = Math.floor(dx / tileWidth),

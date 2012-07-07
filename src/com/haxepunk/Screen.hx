@@ -270,7 +270,6 @@ class Screen
 
 	// Screen infromation.
 	private var _sprite:Sprite;
-	private var _tilesheet:Sprite;
 	private var _bitmap:Array<Bitmap>;
 	private var _current:Int;
 	private var _matrix:Matrix;

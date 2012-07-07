@@ -332,8 +332,8 @@ class SpriteBatch
 	private var loadedSprites:Hash<SpriteInfo>;
 	private var tilesheets:Array<TilesheetInfo>;
 
-	private static inline var maxSheetWidth:Int = 128;
-	private static inline var maxSheetHeight:Int = 128;
+	private static inline var maxSheetWidth:Int = 1024;
+	private static inline var maxSheetHeight:Int = 1024;
 	private static inline var batchSize:Int = 140;
 }
 
