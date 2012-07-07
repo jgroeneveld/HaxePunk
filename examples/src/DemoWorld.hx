@@ -62,9 +62,9 @@ class DemoWorld extends World
 
 	private static var _currentWorld:Int = 0;
 	private static var _worlds:Array<String> = [
+		'platformer.GameWorld',
 		'effects.GameWorld',
-		'masks.GameWorld',
-		'platformer.GameWorld'
+		'masks.GameWorld'
 	];
 
 }

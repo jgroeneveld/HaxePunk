@@ -60,7 +60,7 @@ class SpriteBatch
 			// we've already loaded this bitmap
 			return loadedSprites.get(bitmap);
 		}
-		var data:BitmapData = Assets.getBitmapData(bitmap);
+		var data:BitmapData = HXP.getBitmap(bitmap);
 		if (data == null)
 		{
 			return null;
@@ -91,7 +91,7 @@ class SpriteBatch
 			// we've already loaded this bitmap
 			return loadedSprites.get(bitmap);
 		}
-		var data:BitmapData = Assets.getBitmapData(bitmap);
+		var data:BitmapData = HXP.getBitmap(bitmap);
 		if (data == null)
 		{
 			return null;
@@ -131,7 +131,7 @@ class SpriteBatch
 			// we've already loaded this bitmap
 			return loadedSprites.get(bitmap);
 		}
-		var data:BitmapData = Assets.getBitmapData(bitmap);
+		var data:BitmapData = HXP.getBitmap(bitmap);
 		if (data == null)
 		{
 			return null;
