@@ -14,11 +14,14 @@ import flash.media.SoundMixer;
 import flash.media.SoundTransform;
 import flash.system.System;
 import flash.utils.ByteArray;
+
 import com.haxepunk.Graphic;
 import com.haxepunk.Tween;
-import com.haxepunk.utils.Ease;
+import com.haxepunk.batch.SpriteBatch;
 import com.haxepunk.debug.Console;
 import com.haxepunk.tweens.misc.MultiVarTween;
+import com.haxepunk.utils.Ease;
+
 import haxe.Timer;
 
 /**
@@ -29,7 +32,7 @@ class HXP
 	/**
 	 * The HaxePunk major version.
 	 */
-	public static inline var VERSION:String = "1.6.5";
+	public static inline var VERSION:String = "1.7.0";
 
 	/**
 	 * The standard layer used since only flash can handle negative indicies in arrays, set your layers to some offset of this
@@ -179,9 +182,11 @@ class HXP
 	 */
 	public static inline function clear(array:Array<Dynamic>)
 	{
-		var i:Int;
-		for (i in 0...array.length)
-			array.pop();
+#if (cpp || php)
+		   array.splice(0,array.length);
+#else
+		   untyped array.length = 0;
+#end
 	}
 
 	/**
@@ -932,6 +937,7 @@ class HXP
 	// Global Flash objects.
 	public static var stage:Stage;
 	public static var engine:Engine;
+	public static var spriteBatch:SpriteBatch = new SpriteBatch();
 
 	// Global objects used for rendering, collision, etc.
 	public static var point:Point = new Point();
