@@ -24,7 +24,7 @@ class GameWorld extends DemoWorld
 		smoke = new Emitter("gfx/smoke.png", 16, 16);
 		smoke.newType("exhaust", [0]);
 		smoke.setMotion("exhaust", 90, 30, 0.5, 360, 10, 0.5);
-		smoke.setAlpha("exhaust");
+		smoke.setAlpha("exhaust", 1, 0);
 
 		smokeEntity = addGraphic(smoke);
 	}

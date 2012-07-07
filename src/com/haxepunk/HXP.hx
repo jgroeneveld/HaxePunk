@@ -937,7 +937,11 @@ class HXP
 	// Global Flash objects.
 	public static var stage:Stage;
 	public static var engine:Engine;
+
+#if (cpp || neko)
 	public static var spriteBatch:SpriteBatch = new SpriteBatch();
+	public static var tilesheet:Sprite = new Sprite();
+#end
 
 	// Global objects used for rendering, collision, etc.
 	public static var point:Point = new Point();

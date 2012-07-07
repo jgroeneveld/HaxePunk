@@ -2,7 +2,7 @@
 <project>
 	<app title="HaxePunk" main="Main"
 		package="com.example.app" version="1.0.0" company="HaxePunk" />
-	<window width="640" height="480" fps="30"
+	<window width="640" height="480" fps="60"
 		orientation="portrait" resizable="true" />
 
 	<set name="BUILD_DIR" value="bin" />

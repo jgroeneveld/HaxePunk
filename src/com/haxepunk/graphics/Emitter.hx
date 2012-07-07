@@ -56,6 +56,10 @@ class Emitter extends Graphic
 		_frameWidth = (frameWidth != 0) ? frameWidth : _width;
 		_frameHeight = (frameHeight != 0) ? frameHeight : _height;
 		_frameCount = Std.int(_width / _frameWidth) * Std.int(_height / _frameHeight);
+
+#if (cpp || neko)
+		_ts = HXP.spriteBatch.addSpriteSheet(source, _frameWidth, _frameHeight);
+#end
 	}
 
 	override public function update()
@@ -127,6 +131,17 @@ class Emitter extends Graphic
 			_p.y = _point.y + p._y + p._moveY * td;
 			p._moveY += p._gravity * td;
 
+#if (cpp || neko)
+			var alpha = type._alpha + type._alphaRange * ((type._alphaEase == null) ? t : type._alphaEase(t));
+			td = (type._colorEase == null) ? t : type._colorEase(t);
+			var r = type._red + type._redRange * td;
+			var g = type._green + type._greenRange * td;
+			var b = type._blue + type._blueRange * td;
+
+			HXP.spriteBatch.draw(_ts.index,
+				_p.x, _p.y, _ts.offset + Std.int(td * type._frames.length),
+				1, alpha, type._angle, r, g, b);
+#else
 			// get frame
 			if (type._frames.length == 0)
 				rect.x = 0;
@@ -157,6 +172,7 @@ class Emitter extends Graphic
 			{
 				target.copyPixels(type._source, rect, _p, null, null, true);
 			}
+#end // nme
 
 			// get next particle
 			p = p._next;
@@ -314,6 +330,10 @@ class Emitter extends Graphic
 	private var _types:Hash<ParticleType>;
 	private var _particle:Particle;
 	private var _cache:Particle;
+
+#if (cpp || neko)
+	private var _ts:com.haxepunk.batch.SpriteBatch.SpriteInfo;
+#end
 
 	// Source information.
 	private var _source:BitmapData;

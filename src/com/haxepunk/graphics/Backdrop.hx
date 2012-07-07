@@ -4,6 +4,9 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import com.haxepunk.HXP;
 import com.haxepunk.Graphic;
+#if (cpp || neko)
+import nme.display.Tilesheet;
+#end
 
 /**
  * A background texture that can be repeated horizontally and vertically
@@ -34,6 +37,11 @@ class Backdrop extends Canvas
 		HXP.rect.width = _width;
 		HXP.rect.height = _height;
 		fillTexture(HXP.rect, _texture);
+
+#if (cpp || neko)
+		_ts = new Tilesheet(_buffers[0]);
+		_ts.addTileRect(HXP.rect);
+#end
 	}
 
 	/** Renders the Backdrop. */
@@ -56,9 +64,24 @@ class Backdrop extends Canvas
 
 		_x = x; _y = y;
 		x = y = 0;
+#if (cpp || neko)
+		_ts.drawTiles(HXP.tilesheet.graphics,
+			[_point.x, _point.y, 0, // point, tile
+				HXP.getRed(color) / 255,
+				HXP.getGreen(color) / 255,
+				HXP.getBlue(color) / 255,
+				alpha],
+			false, // smoothing
+			Tilesheet.TILE_ALPHA | Tilesheet.TILE_RGB); // flags
+#else
 		super.render(target, _point, HXP.zero);
+#end
 		x = _x; y = _y;
 	}
+
+#if (cpp || neko)
+	private var _ts:Tilesheet;
+#end
 
 	// Backdrop information.
 	private var _texture:BitmapData;

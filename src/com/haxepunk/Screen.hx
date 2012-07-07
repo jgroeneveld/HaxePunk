@@ -23,6 +23,9 @@ class Screen
 
 		// create screen buffers
 		HXP.engine.addChild(_sprite);
+#if (cpp || neko)
+		HXP.engine.addChild(HXP.tilesheet);
+#end
 	}
 
 	public function init()
@@ -86,8 +89,9 @@ class Screen
 	public function refresh()
 	{
 		// refreshes the screen
-#if neko
+#if (cpp || neko)
 		HXP.buffer.fillRect(HXP.bounds, { rgb: _color, a: 1 });
+		HXP.tilesheet.graphics.clear();
 #else
 		HXP.buffer.fillRect(HXP.bounds, _color);
 #end
@@ -101,6 +105,9 @@ class Screen
 		// refresh the buffers
 		_bitmap[_current].visible = true;
 		_bitmap[1 - _current].visible = false;
+#if (cpp || neko)
+		HXP.spriteBatch.render(HXP.tilesheet.graphics, smoothing);
+#end
 	}
 
 	/** @private Re-applies transformation matrix. */
@@ -263,6 +270,7 @@ class Screen
 
 	// Screen infromation.
 	private var _sprite:Sprite;
+	private var _tilesheet:Sprite;
 	private var _bitmap:Array<Bitmap>;
 	private var _current:Int;
 	private var _matrix:Matrix;
