@@ -57,6 +57,10 @@ class Spritemap extends Image
 		_frameCount = _columns * _rows;
 		callbackFunc = cbFunc;
 
+#if (cpp || neko)
+		_ts = HXP.spriteBatch.addSpriteSheet(source, frameWidth, frameHeight);
+#end
+
 		updateBuffer();
 		active = true;
 
@@ -67,11 +71,9 @@ class Spritemap extends Image
 	 */
 	override public function updateBuffer(clearBefore:Bool = false)
 	{
-#if cpp
+#if (cpp || neko)
+		if (flipped) _rect.x = (_width - _rect.width) - _rect.x;
 		return;
-#end
-#if neko
-		if (_width == null) return;
 #end
 		// get position of the current frame
 		_rect.x = _rect.width * _frame;
@@ -83,6 +85,19 @@ class Spritemap extends Image
 		// update the buffer
 		super.updateBuffer(clearBefore);
 	}
+
+#if (cpp || neko)
+	/** Renders the image. */
+	override public function render(target:BitmapData, point:Point, camera:Point)
+	{
+		_point.x = point.x + x - camera.x * scrollX;
+		_point.y = point.y + y - camera.y * scrollY;
+		HXP.spriteBatch.draw(_ts.index, _point.x, _point.y,
+			_ts.offset + _frame,
+			scale, alpha, angle,
+			HXP.getRed(color), HXP.getGreen(color), HXP.getBlue(color));
+	}
+#end
 
 	/** @private Updates the animation. */
 	override public function update()
@@ -277,7 +292,7 @@ class Spritemap extends Image
 	private var _frame:Int;
 	private var _timer:Float;
 
-	#if cpp
-	private var _baseID:Int;
-	#end
+#if (cpp || neko)
+	private var _ts:com.haxepunk.batch.SpriteBatch.SpriteInfo;
+#end
 }

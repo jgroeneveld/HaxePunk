@@ -300,7 +300,7 @@ class SpriteBatch
 		return index;
 	}
 
-	private function createNewTilesheet(flags:Int = Tilesheet.TILE_ALPHA | Tilesheet.TILE_RGB):TilesheetInfo
+	private function createNewTilesheet(flags:Int = Tilesheet.TILE_ALPHA | Tilesheet.TILE_RGB | Tilesheet.TILE_ROTATION):TilesheetInfo
 	{
 		var bd = HXP.createBitmap(maxSheetWidth, maxSheetHeight, true);
 
