@@ -68,6 +68,16 @@ class HXP
 	public static var height:Int;
 
 	/**
+	 * Width of the window.
+	 */
+	public static var windowWidth:Int;
+
+	/**
+	 * Height of the window.
+	 */
+	public static var windowHeight:Int;
+
+	/**
 	 * If the game is running at a fixed framerate.
 	 */
 	public static var fixed:Bool;
@@ -167,6 +177,11 @@ class HXP
 	 */
 	public static function resize(width:Int, height:Int)
 	{
+		HXP.windowWidth = width;
+		HXP.windowHeight = height;
+		// resize scene to scale
+		width = Std.int(width / HXP.screen.scale / HXP.screen.scaleX);
+		height = Std.int(height / HXP.screen.scale / HXP.screen.scaleY);
 		HXP.width = width;
 		HXP.height = height;
 		HXP.halfWidth = width / 2;
