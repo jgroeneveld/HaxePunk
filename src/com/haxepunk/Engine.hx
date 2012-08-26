@@ -242,6 +242,9 @@ class Engine extends Sprite
 		// update loop
 		if (!paused) update();
 
+		// render loop
+		if (!paused) render();
+
 		// update console
 		if (HXP.console != null) HXP.console.update();
 
@@ -251,9 +254,6 @@ class Engine extends Sprite
 		// update timer
 		_time = _renderTime = Lib.getTimer();
 		HXP._updateTime = _time - _updateTime;
-
-		// render loop
-		if (!paused) render();
 
 		// update timer
 		_time = _flashTime = Lib.getTimer();
